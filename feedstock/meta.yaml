@@ -1,0 +1,20 @@
+title: "LEAP Data Library Prototype"
+description: >
+  A prototype test for the LEAP Data Library refactor
+recipes:
+  - id: "small"
+    object: "recipe:small"
+  - id: "large"
+    object: "recipe:large"
+provenance:
+  providers:
+    - name: "Julius"
+      description: "Just a guy testing some recipes. Nothing to see here."
+      roles:
+        - producer
+        - licensor
+  license: "Just a Test"
+maintainers:
+  - name: "Julius Busecke"
+    orcid: "0000-0001-8571-865X"
+    github: jbusecke

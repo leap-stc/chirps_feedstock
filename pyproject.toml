@@ -1,0 +1,5 @@
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+  'configs' # to avoid raising "F821 Undefined name `c`" in each of the configs
+]
