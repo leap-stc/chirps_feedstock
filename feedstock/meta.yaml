@@ -1,11 +1,9 @@
-title: "LEAP Data Library Prototype"
+title: "CHIRPS-2.0 global daily"
 description: >
-  A prototype test for the LEAP Data Library refactor
+  Climate Hazards Group InfraRed Precipitation with Station data (CHIRPS)
 recipes:
-  - id: "small"
-    object: "recipe:small"
-  - id: "large"
-    object: "recipe:large"
+  - id: "chirps-global-daily"
+    object: "recipe:recipe"
 provenance:
   providers:
     - name: "Julius"
