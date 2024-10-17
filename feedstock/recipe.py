@@ -42,7 +42,7 @@ pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
 # small recipe
 recipe = (
     beam.Create(pattern_a.items())
-    | OpenURLWithFSSpec()
+    | OpenURLWithFSSpec(open_kwargs={'cache_type':'none'})
     | OpenWithXarray()
     | StoreToZarr(
         store_name="chirps-global-daily.zarr",
@@ -50,6 +50,7 @@ recipe = (
         # Can we inject this in the same way as the root?
         # Maybe its better to find another way and avoid injections entirely...
         combine_dims=pattern_a.combine_dim_keys,
+        target_chunks={'time':10, 'longitude':2400, 'latitude':1000},
     )
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
