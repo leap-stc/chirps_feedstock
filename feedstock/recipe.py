@@ -32,48 +32,28 @@ print("Final output locations")
 print(f"{catalog_store_urls=}")
 
 ## Monthly version
-input_urls_a = [
-    "gs://cmip6/pgf-debugging/hanging_bug/file_a.nc",
-    "gs://cmip6/pgf-debugging/hanging_bug/file_b.nc",
-]
-input_urls_b = [
-    "gs://cmip6/pgf-debugging/hanging_bug/file_a_huge.nc",
-    "gs://cmip6/pgf-debugging/hanging_bug/file_b_huge.nc",
+input_urls = [
+    f"http://data.chc.ucsb.edu/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.{year}.days_p05.nc" for year in range(1981, 2025)
 ]
 
-pattern_a = pattern_from_file_sequence(input_urls_a, concat_dim="time")
-pattern_b = pattern_from_file_sequence(input_urls_b, concat_dim="time")
+pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
 
 
 # small recipe
-small = (
+recipe = (
     beam.Create(pattern_a.items())
     | OpenURLWithFSSpec()
     | OpenWithXarray()
     | StoreToZarr(
-        store_name="small.zarr",
+        store_name="chirps-global-daily.zarr",
         # FIXME: This is brittle. it needs to be named exactly like in meta.yaml...
         # Can we inject this in the same way as the root?
         # Maybe its better to find another way and avoid injections entirely...
         combine_dims=pattern_a.combine_dim_keys,
+        target_chunks={'time':10, 'longitude':2400, 'latitude':1000},
     )
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
-    | Copy(target=catalog_store_urls["small"])
-)
-
-# larger recipe
-large = (
-    beam.Create(pattern_b.items())
-    | OpenURLWithFSSpec()
-    | OpenWithXarray()
-    | StoreToZarr(
-        store_name="large.zarr",
-        combine_dims=pattern_b.combine_dim_keys,
-    )
-    | InjectAttrs()
-    | ConsolidateDimensionCoordinates()
-    | ConsolidateMetadata()
-    | Copy(target=catalog_store_urls["large"])
+    | Copy(target=catalog_store_urls["chirps-global-daily"])
 )
