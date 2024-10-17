@@ -33,7 +33,7 @@ print(f"{catalog_store_urls=}")
 
 ## Monthly version
 input_urls = [
-    f"http://data.chc.ucsb.edu/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.{year}.days_p05.nc" for year in [1981, 1982, 1983]
+    f"http://data.chc.ucsb.edu/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.{year}.days_p05.nc" for year in range(1981, 2025)
 ]
 
 pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
