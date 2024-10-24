@@ -5,8 +5,7 @@ A synthetic prototype recipe
 import os
 import apache_beam as beam
 from leap_data_management_utils.data_management_transforms import (
-    Copy,
-    CopyRclone
+    CopyRclone,
     InjectAttrs,
     get_catalog_store_urls,
 )
