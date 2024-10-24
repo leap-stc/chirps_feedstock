@@ -6,6 +6,7 @@ import os
 import apache_beam as beam
 from leap_data_management_utils.data_management_transforms import (
     Copy,
+    CopyRclone
     InjectAttrs,
     get_catalog_store_urls,
 )
@@ -32,8 +33,10 @@ print("Final output locations")
 print(f"{catalog_store_urls=}")
 
 ## Monthly version
+# years = range(1981, 2025)
+years = range(1981, 1983)
 input_urls = [
-    f"http://data.chc.ucsb.edu/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.{year}.days_p05.nc" for year in range(1981, 2025)
+    f"http://data.chc.ucsb.edu/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.{year}.days_p05.nc" for year in years
 ]
 
 pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
@@ -55,5 +58,6 @@ recipe = (
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
-    | Copy(target=catalog_store_urls["chirps-global-daily"])
+    # | Copy(target=catalog_store_urls["chirps-global-daily"])
+    CopyRclone(target='m2lines-test/test-rclone-stage/chirps-global-daily.zarr')
 )
