@@ -58,6 +58,5 @@ recipe = (
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
-    # | Copy(target=catalog_store_urls["chirps-global-daily"])
     | CopyRclone(target='m2lines-test/test-rclone-stage/chirps-global-daily.zarr')
 )
