@@ -1,6 +1,6 @@
 pangeo-forge-recipes==0.10.7
 apache-beam[gcp]
 gcsfs
-google-cloud # needed to grab secrets from google secret manager
+google-cloud-secret-manager # needed to grab secrets from google secret manager
 git+https://github.com/leap-stc/leap-data-management-utils.git@rclone-copy-stage
 #leap-data-management-utils==0.0.12
