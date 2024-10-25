@@ -56,5 +56,5 @@ recipe = (
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
-    | CopyRclone(target=catalog_store_urls["small"].replace("https://nyu1.osn.mghpcc.org/","")) #FIXME
+    | CopyRclone(target=catalog_store_urls["chirps-global-daily"].replace("https://nyu1.osn.mghpcc.org/","")) #FIXME
 )
