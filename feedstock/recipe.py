@@ -32,8 +32,7 @@ print("Final output locations")
 print(f"{catalog_store_urls=}")
 
 ## Monthly version
-# years = range(1981, 2025)
-years = range(1981, 1983)
+years = range(1981, 2025)
 input_urls = [
     f"http://data.chc.ucsb.edu/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.{year}.days_p05.nc" for year in years
 ]
@@ -57,5 +56,5 @@ recipe = (
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
-    | CopyRclone(target='m2lines-test/test-rclone-stage/chirps-global-daily.zarr')
+    | CopyRclone(target=catalog_store_urls["small"].replace("https://nyu1.osn.mghpcc.org/","")) #FIXME
 )
