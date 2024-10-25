@@ -43,7 +43,7 @@ pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
 # small recipe
 recipe = (
     beam.Create(pattern_a.items())
-    | OpenURLWithFSSpec()
+    | OpenURLWithFSSpec(max_concurrency=1)# try slow download
     | OpenWithXarray()
     | StoreToZarr(
         store_name="chirps-global-daily.zarr",
