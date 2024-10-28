@@ -4,7 +4,7 @@ import os
 repo_path = os.environ['GITHUB_REPOSITORY']
 FEEDSTOCK_NAME = repo_path.split('/')[-1]
 
-c.Bake.prune = 1
+c.Bake.prune = 0
 c.Bake.bakery_class = "pangeo_forge_runner.bakery.dataflow.DataflowBakery"
 c.Bake.container_image = "quay.io/leap-stc/rclone-beam:2024.09.24"
 c.DataflowBakery.use_dataflow_prime = True
