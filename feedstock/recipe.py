@@ -51,7 +51,7 @@ recipe = (
         # Can we inject this in the same way as the root?
         # Maybe its better to find another way and avoid injections entirely...
         combine_dims=pattern_a.combine_dim_keys,
-        target_chunks={'time':10, 'longitude':2400, 'latitude':1000},
+        target_chunks={'time':20, 'longitude':2400, 'latitude':1000},
     )
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
