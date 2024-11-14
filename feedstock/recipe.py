@@ -34,7 +34,8 @@ print(f"{catalog_store_urls=}")
 ## Monthly version
 years = range(1981, 2025)
 input_urls = [
-    f"http://data.chc.ucsb.edu/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.{year}.days_p05.nc" for year in years
+    f"http://data.chc.ucsb.edu/products/CHIRPS-2.0/global_daily/netcdf/p05/chirps-v2.0.{year}.days_p05.nc"
+    for year in years
 ]
 
 pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
@@ -51,10 +52,14 @@ recipe = (
         # Can we inject this in the same way as the root?
         # Maybe its better to find another way and avoid injections entirely...
         combine_dims=pattern_a.combine_dim_keys,
-        target_chunks={'time':20, 'longitude':2400, 'latitude':1000},
+        target_chunks={"time": 20, "longitude": 2400, "latitude": 1000},
     )
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
-    | CopyRclone(target=catalog_store_urls["chirps-global-daily"].replace("https://nyu1.osn.mghpcc.org/","")) #FIXME
+    | CopyRclone(
+        target=catalog_store_urls["chirps-global-daily"].replace(
+            "https://nyu1.osn.mghpcc.org/", ""
+        )
+    )  # FIXME
 )
