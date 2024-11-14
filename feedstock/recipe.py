@@ -5,7 +5,7 @@ A synthetic prototype recipe
 import os
 import apache_beam as beam
 from leap_data_management_utils.data_management_transforms import (
-    # CopyRclone,
+    CopyRclone,
     InjectAttrs,
     get_catalog_store_urls,
 )
@@ -41,7 +41,6 @@ input_urls = [
 pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
 
 
-# small recipe
 recipe = (
     beam.Create(pattern_a.items())
     | OpenURLWithFSSpec()
@@ -52,14 +51,14 @@ recipe = (
         # Can we inject this in the same way as the root?
         # Maybe its better to find another way and avoid injections entirely...
         combine_dims=pattern_a.combine_dim_keys,
-        target_chunks={"time": 20, "longitude": 2400, "latitude": 1000},
+        target_chunks={"time": 365},
     )
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
-    # | CopyRclone(
-    #     target=catalog_store_urls["chirps-global-daily"].replace(
-    #         "https://nyu1.osn.mghpcc.org/", ""
-    #     )
-    # )  # FIXME
+    | CopyRclone(
+        target=catalog_store_urls["chirps-global-daily"].replace(
+            "https://nyu1.osn.mghpcc.org/", ""
+        )
+    )  # FIXME
 )
