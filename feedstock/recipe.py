@@ -5,8 +5,6 @@ A synthetic prototype recipe
 import os
 import apache_beam as beam
 from leap_data_management_utils.data_management_transforms import (
-    CopyRclone,
-    InjectAttrs,
     get_catalog_store_urls,
 )
 from pangeo_forge_recipes.patterns import pattern_from_file_sequence
@@ -14,8 +12,6 @@ from pangeo_forge_recipes.transforms import (
     OpenURLWithFSSpec,
     OpenWithXarray,
     StoreToZarr,
-    ConsolidateMetadata,
-    ConsolidateDimensionCoordinates,
 )
 
 # parse the catalog store locations (this is where the data is copied to after successful write (and maybe testing)
@@ -51,14 +47,12 @@ recipe = (
         # Can we inject this in the same way as the root?
         # Maybe its better to find another way and avoid injections entirely...
         combine_dims=pattern_a.combine_dim_keys,
-        target_chunks={'time':200, 'latitude':200, 'longitude':720},
+        target_chunks={"time": 200, "latitude": 200, "longitude": 720},
     )
-    | InjectAttrs()
-    | ConsolidateDimensionCoordinates()
-    | ConsolidateMetadata()
-    | CopyRclone(
-        target=catalog_store_urls["chirps-global-daily"].replace(
-            "https://nyu1.osn.mghpcc.org/", ""))
-    )
-
-    
+    # | InjectAttrs()
+    # | ConsolidateDimensionCoordinates()
+    # | ConsolidateMetadata()
+    # | CopyRclone(
+    #     target=catalog_store_urls["chirps-global-daily"].replace(
+    #         "https://nyu1.osn.mghpcc.org/", ""))
+)
