@@ -15,7 +15,7 @@ except subprocess.CalledProcessError as e:
 BUCKET_PREFIX = f"gs://leap-scratch/{user}/{repo_name}"
 print(f"{BUCKET_PREFIX=}")
 
-c.Bake.prune = False
+c.Bake.prune = True
 c.Bake.bakery_class = "pangeo_forge_runner.bakery.local.LocalDirectBakery"
 c.TargetStorage.fsspec_class = "gcsfs.GCSFileSystem"
 c.InputCacheStorage.fsspec_class = "gcsfs.GCSFileSystem"

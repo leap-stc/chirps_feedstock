@@ -51,14 +51,14 @@ recipe = (
         # Can we inject this in the same way as the root?
         # Maybe its better to find another way and avoid injections entirely...
         combine_dims=pattern_a.combine_dim_keys,
-        target_chunks={"time": 300},
+        target_chunks={'time':200, 'latitude':200, 'longitude':720},
     )
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
     | CopyRclone(
         target=catalog_store_urls["chirps-global-daily"].replace(
-            "https://nyu1.osn.mghpcc.org/", ""
-        )
-    )  # FIXME
-)
+            "https://nyu1.osn.mghpcc.org/", ""))
+    )
+
+    
