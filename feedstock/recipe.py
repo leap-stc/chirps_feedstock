@@ -57,8 +57,7 @@ recipe = (
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
     | CopyRclone(
-        target=catalog_store_urls["chirps-global-daily"].replace(
-            "https://nyu1.osn.mghpcc.org/", ""
-        )
+        target=catalog_store_urls["chirps-global-daily"]
+        remove_endpoint_url = "https://nyu1.osn.mghpcc.org/"
     )
 )
