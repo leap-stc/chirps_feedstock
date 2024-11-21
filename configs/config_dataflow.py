@@ -8,7 +8,7 @@ c.Bake.prune = False
 c.Bake.bakery_class = "pangeo_forge_runner.bakery.dataflow.DataflowBakery"
 c.Bake.container_image = "quay.io/leap-stc/rclone-beam:2024.09.24"
 c.DataflowBakery.use_dataflow_prime = True
-c.DataflowBakery.max_num_workers = 15
+c.DataflowBakery.max_num_workers = 5
 c.DataflowBakery.use_public_ips = True
 c.DataflowBakery.service_account_email = (
     "leap-community-bakery@leap-pangeo.iam.gserviceaccount.com"
