@@ -43,8 +43,8 @@ pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
 
 recipe = (
     beam.Create(pattern_a.items())
-    | OpenURLWithFSSpec(fsspec_sync_patch=True)
-    | OpenWithXarray(load=True, xarray_open_kwargs={'engine':'h5netcdf'})
+    | OpenURLWithFSSpec(fsspec_sync_patch=False)
+    | OpenWithXarray(load=True)
     | StoreToZarr(
         store_name="chirps-global-daily.zarr",
         # FIXME: This is brittle. it needs to be named exactly like in meta.yaml...
