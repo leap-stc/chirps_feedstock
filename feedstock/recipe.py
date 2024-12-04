@@ -43,8 +43,8 @@ pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
 
 recipe = (
     beam.Create(pattern_a.items())
-    | OpenURLWithFSSpec(fsspec_sync_patch=False)
-    | OpenWithXarray(load=True)
+    | OpenURLWithFSSpec(fsspec_sync_patch=True)
+    | OpenWithXarray()
     | StoreToZarr(
         store_name="chirps-global-daily.zarr",
         # FIXME: This is brittle. it needs to be named exactly like in meta.yaml...
@@ -58,6 +58,6 @@ recipe = (
     | ConsolidateMetadata()
     | CopyRclone(
         target=catalog_store_urls["chirps-global-daily"],
-        remove_endpoint_url = "https://nyu1.osn.mghpcc.org/",
+        remove_endpoint_url="https://nyu1.osn.mghpcc.org/",
     )
 )
