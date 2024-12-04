@@ -5,7 +5,6 @@ A synthetic prototype recipe
 import os
 import apache_beam as beam
 from leap_data_management_utils.data_management_transforms import (
-    CopyRclone,
     InjectAttrs,
     get_catalog_store_urls,
 )
@@ -56,8 +55,8 @@ recipe = (
     | InjectAttrs()
     | ConsolidateDimensionCoordinates()
     | ConsolidateMetadata()
-    | CopyRclone(
-        target=catalog_store_urls["chirps-global-daily"],
-        remove_endpoint_url="https://nyu1.osn.mghpcc.org/",
-    )
+    # | CopyRclone(
+    #     target=catalog_store_urls["chirps-global-daily"],
+    #     remove_endpoint_url="https://nyu1.osn.mghpcc.org/",
+    # )
 )
