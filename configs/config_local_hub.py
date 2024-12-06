@@ -21,3 +21,15 @@ c.TargetStorage.fsspec_class = "gcsfs.GCSFileSystem"
 c.InputCacheStorage.fsspec_class = "gcsfs.GCSFileSystem"
 c.TargetStorage.root_path = f"{BUCKET_PREFIX}/output/{{job_name}}"
 c.InputCacheStorage.root_path = f"gs://leap-scratch/data-library/feedstocks/cache"
+
+
+
+c.TargetStorage.fsspec_class = "s3fs.S3FileSystem"
+c.TargetStorage.root_path = f"leap-m2lines-test/output/{{job_name}}"
+
+osn_kwargs = dict(client_kwargs={'endpoint_url':'https://nyu1.osn.mghpcc.org'},
+key="0DJ5POIMB9T498Y4QXP6",
+secret="p47QB7sSqbykTi3pZVr7I8SOxsJ1VPCDahA6ALYT",
+)
+
+c.TargetStorage.fsspec_args = osn_kwargs

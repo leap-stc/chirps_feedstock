@@ -41,9 +41,17 @@ input_urls = [
 pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
 
 
+fsspec_kwargs = dict(
+    client_kwargs=dict(
+        default_cache_type="none",
+        default_fill_cache=False,
+        use_listings_cache=False,
+    )
+)
+
 recipe = (
     beam.Create(pattern_a.items())
-    | OpenURLWithFSSpec(fsspec_sync_patch=True)
+    | OpenURLWithFSSpec(fsspec_sync_patch=True, open_kwargs=fsspec_kwargs)
     | OpenWithXarray()
     | StoreToZarr(
         store_name="chirps-global-daily.zarr",
