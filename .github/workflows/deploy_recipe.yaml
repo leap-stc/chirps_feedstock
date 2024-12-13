@@ -36,8 +36,6 @@ jobs:
             --Bake.recipe_id=${{ github.event.inputs.recipe_id }} \
             -f configs/config_dataflow.py
         env:
-          OSN_LEAP_M2LINES_TEST_KEY: "${{ secrets.OSN_LEAP_M2LINES_TEST_KEY }}"
-          OSN_LEAP_M2LINES_TEST_SECRET: "${{ secrets.OSN_LEAP_M2LINES_TEST_SECRET }}"
           GOOGLE_APPLICATION_CREDENTIALS: "${{ steps.auth.outputs.credentials_file_path }}"
       - name: Wait for Dataflow jobs to finish
         # I tried to make this reusable but the fucking thing would not accept env.JOB_NAME as input.
