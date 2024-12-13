@@ -42,7 +42,11 @@ pattern_a = pattern_from_file_sequence(input_urls, concat_dim="time")
 
 
 fsspec_kwargs = dict(
-    default_cache_type="none", default_fill_cache=False, use_listings_cache=False
+    client_kwargs=dict(
+        default_cache_type="none",
+        default_fill_cache=False,
+        use_listings_cache=False,
+    )
 )
 
 recipe = (
