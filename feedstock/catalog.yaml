@@ -6,4 +6,4 @@ tags:
 stores:
   - id: "chirps-global-daily"
     name: "CHIRPS-2.0"
-    url: "gs://leap-scratch/data-library/feedstocks/chirps_feedstock/chirps-global-dailyzarr"
+    url: "https://nyu1.osn.mghpcc.org/leap-pangeo-pipeline/chirps_feedstock/chirps-global-daily.zarr"
