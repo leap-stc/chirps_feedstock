@@ -4,9 +4,10 @@ import os
 repo_path = os.environ['GITHUB_REPOSITORY']
 FEEDSTOCK_NAME = repo_path.split('/')[-1]
 
-c.Bake.prune = True
+c.Bake.prune = False
 c.Bake.bakery_class = "pangeo_forge_runner.bakery.dataflow.DataflowBakery"
-c.Bake.container_image = "quay.io/leap-stc/rclone-beam:2024.09.24"
+# c.Bake.container_image = "quay.io/leap-stc/rclone-beam:2024.09.24"
+c.Bake.container_image = "quay.io/leap-stc/pangeo-notebook:2024.10.26"
 
 c.DataflowBakery.use_dataflow_prime = False
 c.DataflowBakery.max_num_workers = 10
@@ -18,18 +19,6 @@ c.DataflowBakery.service_account_email = (
 c.DataflowBakery.project_id = "leap-pangeo"
 c.DataflowBakery.temp_gcs_location = f"gs://leap-scratch/data-library/feedstocks/temp/{FEEDSTOCK_NAME}"
 c.TargetStorage.fsspec_class = "gcsfs.GCSFileSystem"
+c.InputCacheStorage.fsspec_class = "gcsfs.GCSFileSystem"
+c.TargetStorage.root_path = f"gs://leap-scratch/data-library/feedstocks/output/{FEEDSTOCK_NAME}/{{job_name}}"
 c.InputCacheStorage.root_path = f"gs://leap-scratch/data-library/feedstocks/cache"
-
-# update after test
-key = os.environ["OSN_LEAP_M2LINES_TEST_KEY"]
-secret = os.environ["OSN_LEAP_M2LINES_TEST_SECRET"]
-
-osn_kwargs = dict(client_kwargs={'endpoint_url':'https://nyu1.osn.mghpcc.org'},
-key=key,
-secret=secret,
-)
-
-
-c.TargetStorage.fsspec_class = "s3fs.S3FileSystem"
-c.TargetStorage.root_path = f"leap-m2lines-test/output/{{job_name}}"
-c.TargetStorage.fsspec_args = osn_kwargs
