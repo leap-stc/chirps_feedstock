@@ -28,6 +28,10 @@ jobs:
         shell: bash -l {0}
     steps:
       - uses: actions/checkout@v4
+      - run: |
+          cat ./feedstock/catalog.yaml
+          git --no-pager log --oneline -n 4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
