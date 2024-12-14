@@ -40,12 +40,12 @@
             "use_case": "multiscales"
           }
         ],
-        "public": false,
-        "geospatial": null,
+        "public": true,
+        "geospatial": true,
         "xarray_open_kwargs": {
           "engine": "zarr"
         },
-        "last_updated": null
+        "last_updated": "2024-11-19T21:19:44.192735+00:00"
       }
     ],
     "ncviewjs:meta_yaml_url": "https://github.com/leap-stc/chirps_feedstock/blob/main/feedstock/meta.yaml"
