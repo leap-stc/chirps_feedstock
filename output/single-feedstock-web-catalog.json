@@ -34,13 +34,18 @@
         "id": "chirps-global-daily",
         "name": "CHIRPS-2.0",
         "url": "https://nyu1.osn.mghpcc.org/leap-pangeo-pipeline/chirps_feedstock/chirps-global-daily.zarr",
-        "ncviewjs:rechunking": null,
-        "public": true,
-        "geospatial": true,
+        "rechunking": [
+          {
+            "path": "https://nyu1.osn.mghpcc.org/leap-pangeo-pipeline/CHIRPS/CHIRPS_pyramid_5_lvls.zarr",
+            "use_case": "multiscales"
+          }
+        ],
+        "public": false,
+        "geospatial": null,
         "xarray_open_kwargs": {
           "engine": "zarr"
         },
-        "last_updated": "2024-11-19T21:19:44.192735+00:00"
+        "last_updated": null
       }
     ],
     "ncviewjs:meta_yaml_url": "https://github.com/leap-stc/chirps_feedstock/blob/main/feedstock/meta.yaml"
