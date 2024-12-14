@@ -24,7 +24,7 @@ class Subset(beam.PTransform):
     """Custom PTransform to select two days and single variable"""
 
     def _subset(self, ds: xr.Dataset) -> xr.Dataset:
-        ds = ds.isel(time=slice(0, 2))[["precip"]]
+        ds = ds.isel(time=slice(0, 365))[["precip"]]
 
         return ds
 
@@ -32,8 +32,21 @@ class Subset(beam.PTransform):
         return pcoll | "subset" >> beam.MapTuple(lambda k, v: (k, self._subset(v)))
 
 
-fs = fsspec.get_filesystem_class("file")()
-target_root = FSSpecTarget(fs, "pyramid_outputs/resample/")
+import s3fs
+fs = s3fs.S3FileSystem(
+
+	)
+# fs = fsspec.get_filesystem_class("file")()
+target_root = FSSpecTarget(fs, "leap-pangeo-pipeline/CHIRPS/")
+
+
+
+
+# ds = xr.open_zarr('https://nyu1.osn.mghpcc.org/leap-pangeo-pipeline/CHIRPS/CHIRPS_pyramid_5_lvls.zarr/0, chunks={})
+
+
+# fs = fsspec.get_filesystem_class("file")()
+# target_root = FSSpecTarget(fs, 'pyramid_outputs/resample/')
 
 
 with beam.Pipeline() as p:
@@ -44,11 +57,11 @@ with beam.Pipeline() as p:
         | Subset()
         | StoreToPyramid(
             target_root=target_root,
-            store_name="pyramid_example_resample.zarr",
+            store_name="CHIRPS_pyramid_5_lvls.zarr",
             epsg_code="4326",
             pyramid_method="resample",
             pyramid_kwargs={"x": "longitude", "y": "latitude"},
-            levels=1,
+            levels=5,
             combine_dims=pattern.combine_dim_keys,
         )
         | ConsolidateMetadata()
