@@ -34,7 +34,12 @@
         "id": "chirps-global-daily",
         "name": "CHIRPS-2.0",
         "url": "https://nyu1.osn.mghpcc.org/leap-pangeo-pipeline/chirps_feedstock/chirps-global-daily.zarr",
-        "rechunking": null,
+        "rechunking": [
+          {
+            "path": "https://nyu1.osn.mghpcc.org/leap-pangeo-pipeline/CHIRPS/CHIRPS_pyramid_5_lvls.zarr",
+            "use_case": "multiscales"
+          }
+        ],
         "public": true,
         "geospatial": true,
         "xarray_open_kwargs": {
