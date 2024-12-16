@@ -16,7 +16,17 @@ c.DataflowBakery.service_account_email = (
 )
 c.DataflowBakery.project_id = "leap-pangeo"
 c.DataflowBakery.temp_gcs_location = f"gs://leap-scratch/data-library/feedstocks/temp/{FEEDSTOCK_NAME}"
-c.TargetStorage.fsspec_class = "gcsfs.GCSFileSystem"
-c.InputCacheStorage.fsspec_class = "gcsfs.GCSFileSystem"
-c.TargetStorage.root_path = f"gs://leap-scratch/data-library/feedstocks/output/{FEEDSTOCK_NAME}/{{job_name}}"
-c.InputCacheStorage.root_path = f"gs://leap-scratch/data-library/feedstocks/cache"
+
+key = os.environ["OSN_LEAP_PIPELINE_KEY"]
+secret = os.environ["OSN_LEAP_PIPELINE_KEY_SECRET"]
+
+osn_kwargs = dict(client_kwargs={'endpoint_url':'https://nyu1.osn.mghpcc.org'},
+key=key,
+secret=secret,
+)
+
+c.TargetStorage.fsspec_class = "s3fs.S3FileSystem"
+c.TargetStorage.root_path = f"leap-m2lines-test/output/{{job_name}}"
+c.TargetStorage.fsspec_args = osn_kwargs
+
+
